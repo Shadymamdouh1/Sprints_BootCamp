@@ -1,0 +1,416 @@
+
+MCU2 SLAVE.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000232  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000002a6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000106  00800060  00800060  000002a6  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002a6  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002d8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000150  00000000  00000000  00000314  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000eea  00000000  00000000  00000464  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000806  00000000  00000000  0000134e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000007c4  00000000  00000000  00001b54  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000378  00000000  00000000  00002318  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000853  00000000  00000000  00002690  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000942  00000000  00000000  00002ee3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000110  00000000  00000000  00003825  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 e8 00 	jmp	0x1d0	; 0x1d0 <__vector_13>
+  38:	0c 94 bc 00 	jmp	0x178	; 0x178 <__vector_14>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	21 e0       	ldi	r18, 0x01	; 1
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a6 36       	cpi	r26, 0x66	; 102
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 5b 00 	call	0xb6	; 0xb6 <main>
+  74:	0c 94 17 01 	jmp	0x22e	; 0x22e <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <APPInit>:
+uint8_t aStringBuffer[255];
+/****************************************/
+void APPInit(void)
+{ 
+	/* initialize the UART according to config file */
+	USART_Init();
+  7c:	0e 94 9e 00 	call	0x13c	; 0x13c <USART_Init>
+	/* initialize the SPI according to config file */
+	MCAL_SpiInit();
+  80:	0e 94 62 00 	call	0xc4	; 0xc4 <MCAL_SpiInit>
+  84:	08 95       	ret
+
+00000086 <APPGetString>:
+}
+/* get string from terminal using UART */
+void APPGetString(void)
+{
+	/* we receive the string over SPI connection */
+	MCAL_SPISlaveReceive_String(aStringBuffer);
+  86:	84 e6       	ldi	r24, 0x64	; 100
+  88:	90 e0       	ldi	r25, 0x00	; 0
+  8a:	0e 94 73 00 	call	0xe6	; 0xe6 <MCAL_SPISlaveReceive_String>
+  8e:	08 95       	ret
+
+00000090 <APP_transmit>:
+}
+void APP_transmit(void)
+{
+  90:	cf 93       	push	r28
+	uint8_t u8_counter =0;
+	
+	/* till the end of the string */
+	while(aStringBuffer[u8_counter] != '\0')
+  92:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <aStringBuffer>
+  96:	88 23       	and	r24, r24
+  98:	61 f0       	breq	.+24     	; 0xb2 <APP_transmit+0x22>
+  9a:	c0 e0       	ldi	r28, 0x00	; 0
+	{
+		USART_Transmit(aStringBuffer[u8_counter]);
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+  9e:	0e 94 b0 00 	call	0x160	; 0x160 <USART_Transmit>
+		u8_counter++;
+  a2:	cf 5f       	subi	r28, 0xFF	; 255
+void APP_transmit(void)
+{
+	uint8_t u8_counter =0;
+	
+	/* till the end of the string */
+	while(aStringBuffer[u8_counter] != '\0')
+  a4:	ec 2f       	mov	r30, r28
+  a6:	f0 e0       	ldi	r31, 0x00	; 0
+  a8:	ec 59       	subi	r30, 0x9C	; 156
+  aa:	ff 4f       	sbci	r31, 0xFF	; 255
+  ac:	80 81       	ld	r24, Z
+  ae:	81 11       	cpse	r24, r1
+  b0:	f5 cf       	rjmp	.-22     	; 0x9c <APP_transmit+0xc>
+	{
+		USART_Transmit(aStringBuffer[u8_counter]);
+		u8_counter++;
+	}
+	
+}
+  b2:	cf 91       	pop	r28
+  b4:	08 95       	ret
+
+000000b6 <main>:
+**********************************************/
+
+int main(void)
+{
+   
+	APPInit();
+  b6:	0e 94 3e 00 	call	0x7c	; 0x7c <APPInit>
+    while (1) 
+    {   
+		/* get string from the master using SPI */
+		 APPGetString();
+  ba:	0e 94 43 00 	call	0x86	; 0x86 <APPGetString>
+	   /* transmit the string to the terminal using UART */	 
+		 APP_transmit();
+  be:	0e 94 48 00 	call	0x90	; 0x90 <APP_transmit>
+  c2:	fb cf       	rjmp	.-10     	; 0xba <main+0x4>
+
+000000c4 <MCAL_SpiInit>:
+		MCAL_SPISlaveTXRX(&u8_StringSend[u8_counter],&u8_UnUsedReceived);
+		
+	}
+	
+	
+}
+  c4:	6c 98       	cbi	0x0d, 4	; 13
+  c6:	bc 98       	cbi	0x17, 4	; 23
+  c8:	bd 98       	cbi	0x17, 5	; 23
+  ca:	be 9a       	sbi	0x17, 6	; 23
+  cc:	bf 98       	cbi	0x17, 7	; 23
+  ce:	08 95       	ret
+
+000000d0 <MCAL_SPISlaveTXRX>:
+  d0:	6e 9a       	sbi	0x0d, 6	; 13
+  d2:	fc 01       	movw	r30, r24
+  d4:	80 81       	ld	r24, Z
+  d6:	8f b9       	out	0x0f, r24	; 15
+  d8:	77 9b       	sbis	0x0e, 7	; 14
+  da:	fe cf       	rjmp	.-4      	; 0xd8 <MCAL_SPISlaveTXRX+0x8>
+  dc:	8f b1       	in	r24, 0x0f	; 15
+  de:	fb 01       	movw	r30, r22
+  e0:	80 83       	st	Z, r24
+  e2:	6e 98       	cbi	0x0d, 6	; 13
+  e4:	08 95       	ret
+
+000000e6 <MCAL_SPISlaveReceive_String>:
+void MCAL_SPISlaveReceive_String(uint8_t *u8_StringReceive)
+{
+  e6:	cf 92       	push	r12
+  e8:	df 92       	push	r13
+  ea:	ef 92       	push	r14
+  ec:	ff 92       	push	r15
+  ee:	1f 93       	push	r17
+  f0:	cf 93       	push	r28
+  f2:	df 93       	push	r29
+  f4:	1f 92       	push	r1
+  f6:	cd b7       	in	r28, 0x3d	; 61
+  f8:	de b7       	in	r29, 0x3e	; 62
+  fa:	6c 01       	movw	r12, r24
+	uint8_t u8_counter=0;
+	
+	/* it only receive so neglect the data send */
+	uint8_t u8_NotUsedSend;
+	/* start receiving data */
+	MCAL_SPISlaveTXRX(&u8_NotUsedSend,&u8_StringReceive[u8_counter]);
+  fc:	bc 01       	movw	r22, r24
+  fe:	ce 01       	movw	r24, r28
+ 100:	01 96       	adiw	r24, 0x01	; 1
+ 102:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_SPISlaveTXRX>
+	
+	/* till the end of the string */
+	while(u8_StringReceive[u8_counter] != '\0')
+ 106:	f6 01       	movw	r30, r12
+ 108:	80 81       	ld	r24, Z
+ 10a:	88 23       	and	r24, r24
+ 10c:	71 f0       	breq	.+28     	; 0x12a <MCAL_SPISlaveReceive_String+0x44>
+ 10e:	10 e0       	ldi	r17, 0x00	; 0
+	{
+		u8_counter++;
+ 110:	1f 5f       	subi	r17, 0xFF	; 255
+		MCAL_SPISlaveTXRX(&u8_NotUsedSend,&u8_StringReceive[u8_counter]);
+ 112:	76 01       	movw	r14, r12
+ 114:	e1 0e       	add	r14, r17
+ 116:	f1 1c       	adc	r15, r1
+ 118:	b7 01       	movw	r22, r14
+ 11a:	ce 01       	movw	r24, r28
+ 11c:	01 96       	adiw	r24, 0x01	; 1
+ 11e:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_SPISlaveTXRX>
+	uint8_t u8_NotUsedSend;
+	/* start receiving data */
+	MCAL_SPISlaveTXRX(&u8_NotUsedSend,&u8_StringReceive[u8_counter]);
+	
+	/* till the end of the string */
+	while(u8_StringReceive[u8_counter] != '\0')
+ 122:	f7 01       	movw	r30, r14
+ 124:	80 81       	ld	r24, Z
+ 126:	81 11       	cpse	r24, r1
+ 128:	f3 cf       	rjmp	.-26     	; 0x110 <MCAL_SPISlaveReceive_String+0x2a>
+		u8_counter++;
+		MCAL_SPISlaveTXRX(&u8_NotUsedSend,&u8_StringReceive[u8_counter]);
+		
+	}
+	
+ 12a:	0f 90       	pop	r0
+ 12c:	df 91       	pop	r29
+ 12e:	cf 91       	pop	r28
+ 130:	1f 91       	pop	r17
+ 132:	ff 90       	pop	r15
+ 134:	ef 90       	pop	r14
+ 136:	df 90       	pop	r13
+ 138:	cf 90       	pop	r12
+ 13a:	08 95       	ret
+
+0000013c <USART_Init>:
+}
+UART_ERROR_t USART_RX_Disable(void)
+{
+	UCSRB &=~(1<<UCSRB_RXEN);
+	return UART_NO_ERROR;
+}
+ 13c:	59 98       	cbi	0x0b, 1	; 11
+ 13e:	8c e0       	ldi	r24, 0x0C	; 12
+ 140:	89 b9       	out	0x09, r24	; 9
+ 142:	10 bc       	out	0x20, r1	; 32
+ 144:	80 b5       	in	r24, 0x20	; 32
+ 146:	86 68       	ori	r24, 0x86	; 134
+ 148:	80 bd       	out	0x20, r24	; 32
+ 14a:	80 b5       	in	r24, 0x20	; 32
+ 14c:	80 68       	ori	r24, 0x80	; 128
+ 14e:	80 bd       	out	0x20, r24	; 32
+ 150:	80 b5       	in	r24, 0x20	; 32
+ 152:	80 68       	ori	r24, 0x80	; 128
+ 154:	80 bd       	out	0x20, r24	; 32
+ 156:	80 b5       	in	r24, 0x20	; 32
+ 158:	80 68       	ori	r24, 0x80	; 128
+ 15a:	80 bd       	out	0x20, r24	; 32
+ 15c:	80 e0       	ldi	r24, 0x00	; 0
+ 15e:	08 95       	ret
+
+00000160 <USART_Transmit>:
+ 160:	53 9a       	sbi	0x0a, 3	; 10
+ 162:	5d 9b       	sbis	0x0b, 5	; 11
+ 164:	fe cf       	rjmp	.-4      	; 0x162 <USART_Transmit+0x2>
+ 166:	8c b9       	out	0x0c, r24	; 12
+ 168:	80 e0       	ldi	r24, 0x00	; 0
+ 16a:	08 95       	ret
+
+0000016c <USART_RxInterruptDiable>:
+ 16c:	57 98       	cbi	0x0a, 7	; 10
+ 16e:	80 e0       	ldi	r24, 0x00	; 0
+ 170:	08 95       	ret
+
+00000172 <USART_UDRInterruptDisable>:
+ 172:	55 98       	cbi	0x0a, 5	; 10
+ 174:	80 e0       	ldi	r24, 0x00	; 0
+ 176:	08 95       	ret
+
+00000178 <__vector_14>:
+/************UDRE ISR***************************************************/
+void __vector_14(void)
+{
+ 178:	1f 92       	push	r1
+ 17a:	0f 92       	push	r0
+ 17c:	0f b6       	in	r0, 0x3f	; 63
+ 17e:	0f 92       	push	r0
+ 180:	11 24       	eor	r1, r1
+ 182:	2f 93       	push	r18
+ 184:	3f 93       	push	r19
+ 186:	4f 93       	push	r20
+ 188:	5f 93       	push	r21
+ 18a:	6f 93       	push	r22
+ 18c:	7f 93       	push	r23
+ 18e:	8f 93       	push	r24
+ 190:	9f 93       	push	r25
+ 192:	af 93       	push	r26
+ 194:	bf 93       	push	r27
+ 196:	ef 93       	push	r30
+ 198:	ff 93       	push	r31
+	//PORTA |=(1<<0);
+	 UDR=U8_Transmit_UDR;
+ 19a:	80 91 63 01 	lds	r24, 0x0163	; 0x800163 <U8_Transmit_UDR>
+ 19e:	8c b9       	out	0x0c, r24	; 12
+	USART_UDRInterruptDisable();
+ 1a0:	0e 94 b9 00 	call	0x172	; 0x172 <USART_UDRInterruptDisable>
+	UDRE_CallBack();
+ 1a4:	e0 91 62 00 	lds	r30, 0x0062	; 0x800062 <UDRE_CallBack>
+ 1a8:	f0 91 63 00 	lds	r31, 0x0063	; 0x800063 <UDRE_CallBack+0x1>
+ 1ac:	09 95       	icall
+}
+ 1ae:	ff 91       	pop	r31
+ 1b0:	ef 91       	pop	r30
+ 1b2:	bf 91       	pop	r27
+ 1b4:	af 91       	pop	r26
+ 1b6:	9f 91       	pop	r25
+ 1b8:	8f 91       	pop	r24
+ 1ba:	7f 91       	pop	r23
+ 1bc:	6f 91       	pop	r22
+ 1be:	5f 91       	pop	r21
+ 1c0:	4f 91       	pop	r20
+ 1c2:	3f 91       	pop	r19
+ 1c4:	2f 91       	pop	r18
+ 1c6:	0f 90       	pop	r0
+ 1c8:	0f be       	out	0x3f, r0	; 63
+ 1ca:	0f 90       	pop	r0
+ 1cc:	1f 90       	pop	r1
+ 1ce:	18 95       	reti
+
+000001d0 <__vector_13>:
+/**************************************/
+
+/*************RXC ISR*******************/
+
+void __vector_13(void)
+{
+ 1d0:	1f 92       	push	r1
+ 1d2:	0f 92       	push	r0
+ 1d4:	0f b6       	in	r0, 0x3f	; 63
+ 1d6:	0f 92       	push	r0
+ 1d8:	11 24       	eor	r1, r1
+ 1da:	2f 93       	push	r18
+ 1dc:	3f 93       	push	r19
+ 1de:	4f 93       	push	r20
+ 1e0:	5f 93       	push	r21
+ 1e2:	6f 93       	push	r22
+ 1e4:	7f 93       	push	r23
+ 1e6:	8f 93       	push	r24
+ 1e8:	9f 93       	push	r25
+ 1ea:	af 93       	push	r26
+ 1ec:	bf 93       	push	r27
+ 1ee:	ef 93       	push	r30
+ 1f0:	ff 93       	push	r31
+	*U8_Receive_UDR =UDR;
+ 1f2:	e0 91 64 01 	lds	r30, 0x0164	; 0x800164 <U8_Receive_UDR>
+ 1f6:	f0 91 65 01 	lds	r31, 0x0165	; 0x800165 <U8_Receive_UDR+0x1>
+ 1fa:	8c b1       	in	r24, 0x0c	; 12
+ 1fc:	80 83       	st	Z, r24
+	USART_RxInterruptDiable();
+ 1fe:	0e 94 b6 00 	call	0x16c	; 0x16c <USART_RxInterruptDiable>
+	RXC_CallBack();
+ 202:	e0 91 60 00 	lds	r30, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 206:	f0 91 61 00 	lds	r31, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 20a:	09 95       	icall
+}
+ 20c:	ff 91       	pop	r31
+ 20e:	ef 91       	pop	r30
+ 210:	bf 91       	pop	r27
+ 212:	af 91       	pop	r26
+ 214:	9f 91       	pop	r25
+ 216:	8f 91       	pop	r24
+ 218:	7f 91       	pop	r23
+ 21a:	6f 91       	pop	r22
+ 21c:	5f 91       	pop	r21
+ 21e:	4f 91       	pop	r20
+ 220:	3f 91       	pop	r19
+ 222:	2f 91       	pop	r18
+ 224:	0f 90       	pop	r0
+ 226:	0f be       	out	0x3f, r0	; 63
+ 228:	0f 90       	pop	r0
+ 22a:	1f 90       	pop	r1
+ 22c:	18 95       	reti
+
+0000022e <_exit>:
+ 22e:	f8 94       	cli
+
+00000230 <__stop_program>:
+ 230:	ff cf       	rjmp	.-2      	; 0x230 <__stop_program>
